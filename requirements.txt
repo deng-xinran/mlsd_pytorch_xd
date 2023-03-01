@@ -4,3 +4,7 @@ pillow
 torch
 Flask
 requests
+yacs
+tqdm
+albumentations
+timm

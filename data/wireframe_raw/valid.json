@@ -1,6 +1,6 @@
 [  
 {
-    "Filename": "3_0.png",
+    "filename": "3_0.png",
    "lines":[
       [
         47,
@@ -18,7 +18,7 @@
     "width":2048
   },
   {
-    "Filename": "49cm_2.png",
+    "filename": "49cm_2.png",
     "lines":[
       [
         493,
@@ -36,7 +36,7 @@
     "width":2048
   },
   {
-    "Filename": "bpp_v3.png",
+    "filename": "bpp_v3.png",
     "lines":[
       [
         399,
@@ -54,7 +54,7 @@
     "width":2048
   },
    {
-    "Filename": "Image__2022-08-31__14-10-15.png",
+    "filename": "Image__2022-08-31__14-10-15.png",
     "lines":[
       [
         408,
@@ -72,7 +72,7 @@
     "width":2048
   },
   {
-    "Filename": "Image__2022-08-31__14-12-29.png",
+    "filename": "Image__2022-08-31__14-12-29.png",
     "lines":[
       [
         409,
@@ -90,7 +90,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite9_e.png",
+    "filename": "Rückseite9_e.png",
     "lines":[
       [
         515,
@@ -108,7 +108,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite12_e.png",
+    "filename": "Rückseite12_e.png",
     "lines":[
       [
         435,
@@ -126,7 +126,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite15_e.png",
+    "filename": "Rückseite15_e.png",
     "lines":[
       [
         415,
@@ -144,7 +144,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite16_e.png",
+    "filename": "Rückseite16_e.png",
     "lines":[
       [
         535,
@@ -162,7 +162,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite18_e.png",
+    "filename": "Rückseite18_e.png",
     "lines":[
       [
         417,
@@ -180,7 +180,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite21_e.png",
+    "filename": "Rückseite21_e.png",
    "lines":[
       [
         418,
@@ -198,7 +198,7 @@
     "width":2048
   },
   {
-    "Filename": "test3.png",
+    "filename": "test3.png",
     "lines":[
       [
         115,
@@ -216,7 +216,7 @@
     "width":2048
   },
   {
-    "Filename": "test4.png",
+    "filename": "test4.png",
     "lines":[
       [
         115,
@@ -234,7 +234,7 @@
     "width":2048
   },
   {
-    "Filename": "test20.png",
+    "filename": "test20.png",
    "lines":[
       [
         107,
@@ -252,7 +252,7 @@
     "width":2048
   },
   {
-    "Filename": "test30.png",
+    "filename": "test30.png",
     "lines":[
       [
         108,
@@ -270,7 +270,7 @@
     "width":2048
   },
   {
-    "Filename": "test3000.png",
+    "filename": "test3000.png",
     "lines":[
       [
         109,
@@ -288,7 +288,7 @@
     "width":2048
   },
   {
-    "Filename": "test4000.png",
+    "filename": "test4000.png",
     "lines":[
       [
         109,
@@ -306,7 +306,7 @@
     "width":2048
   },
   {
-    "Filename": "testimg.png",
+    "filename": "testimg.png",
    "lines":[
       [
         119,
@@ -324,7 +324,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite2_e.png",
+    "filename": "Vorderseite2_e.png",
     "lines":[
       [
         470,
@@ -342,7 +342,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite6_e.png",
+    "filename": "Vorderseite6_e.png",
     "lines":[
       [
         491,
@@ -360,7 +360,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite7_e.png",
+    "filename": "Vorderseite7_e.png",
     "lines":[
       [
         412,
@@ -378,7 +378,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite13_e.png",
+    "filename": "Vorderseite13_e.png",
     "lines":[
       [
         428,
@@ -396,7 +396,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite15_e.png",
+    "filename": "Vorderseite15_e.png",
     "lines":[
       [
         435,
@@ -414,7 +414,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite17_e.png",
+    "filename": "Vorderseite17_e.png",
     "lines":[
       [
         479,
@@ -432,7 +432,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite18_e.png",
+    "filename": "Vorderseite18_e.png",
    "lines":[
       [
         0,
@@ -450,7 +450,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite20_e.png",
+    "filename": "Vorderseite20_e.png",
     "lines":[
       [
         411,
@@ -468,7 +468,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite22_e.png",
+    "filename": "Vorderseite22_e.png",
     "lines":[
       [
         476,
@@ -486,7 +486,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite23_e.png",
+    "filename": "Vorderseite23_e.png",
     "lines":[
       [
         537,

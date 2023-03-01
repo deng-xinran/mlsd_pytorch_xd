@@ -29,6 +29,13 @@ from mlsd_pytorch.data.utils import \
       cut_line_by_xmin,
       cut_line_by_xmax)
 
+# AttributeError: module 'numpy' has no attribute 'float'.
+# `np.float` was a deprecated alias for the builtin `float`. To avoid this error in existing code, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+# The aliases was originally deprecated in NumPy 1.20; for more details and guidance see the original release note at:
+#     https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+np.float = float
+np.bool = bool
+
 def parse_label_file_info(img_dir, label_file):
     infos = []
     contens = json.load(open(label_file, 'r'))
@@ -36,7 +43,9 @@ def parse_label_file_info(img_dir, label_file):
         w = c['width']
         h = c['height']
         lines = c['lines']
-        fn = c['filename'][:-4]+'.jpg'
+        # import pdb; pdb.set_trace()
+        # fn = c['filename'][:-4]+'.jpg'
+        fn = c['filename'][:-4] + '.png'
         full_fn = img_dir + fn
         assert os.path.exists(full_fn), full_fn
 

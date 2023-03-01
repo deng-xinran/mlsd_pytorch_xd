@@ -1,6 +1,6 @@
 [
   {
-    "Filename": "1.png",
+    "filename": "1.png",
     "lines":[
       [
         71,
@@ -18,7 +18,7 @@
     "width":2048
   },
   {
-    "Filename": "1_0(1).png",
+    "filename": "1_0 (1).png",
     "lines":[
       [
         13,
@@ -36,7 +36,7 @@
     "width":2048
   },
   {
-    "Filename": "1_0(2).png",
+    "filename": "1_0 (2).png",
     "lines":[
       [
         11,
@@ -54,7 +54,7 @@
     "width":2048
   },
   {
-    "Filename": "3.png",
+    "filename": "3.png",
     "lines":[
       [
         183,
@@ -72,7 +72,7 @@
     "width":2048
   },
   {
-    "Filename": "4.png",
+    "filename": "4.png",
     "lines":[
       [
         412,
@@ -90,7 +90,7 @@
     "width":2048
   },
   {
-    "Filename": "5.png",
+    "filename": "5.png",
     "lines":[
       [
         533,
@@ -108,7 +108,7 @@
     "width":2048
   },
   {
-    "Filename": "44cm.png",
+    "filename": "44cm.png",
     "lines":[
       [
         461,
@@ -126,7 +126,7 @@
     "width":2048
   },
   {
-    "Filename": "49cm.png",
+    "filename": "49cm.png",
    "lines":[
       [
         495,
@@ -144,7 +144,7 @@
     "width":2048
   },
   {
-    "Filename": "100.png",
+    "filename": "100.png",
     "lines":[
       [
         430,
@@ -162,7 +162,7 @@
     "width":2048
   },
   {
-    "Filename": "200.png",
+    "filename": "200.png",
     "lines":[
       [
         423,
@@ -180,7 +180,7 @@
     "width":2048
   },
   {
-    "Filename": "bpp_r1.png",
+    "filename": "bpp_r1.png",
     "lines":[
       [
         398,
@@ -198,7 +198,7 @@
     "width":2048
   },
  {
-    "Filename": "bpp_v1.png",
+    "filename": "bpp_v1.png",
     "lines":[
       [
         409,
@@ -216,7 +216,7 @@
     "width":2048
   },
   {
-    "Filename": "bpp_v2.png",
+    "filename": "bpp_v2.png",
     "lines":[
       [
         408,
@@ -234,7 +234,7 @@
     "width":2048
   },
  {
-    "Filename": "Rückseite8_t.png",
+    "filename": "Rückseite8_t.png",
     "lines":[
       [
         537,
@@ -252,7 +252,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite10_t.png",
+    "filename": "Rückseite10_t.png",
     "lines":[
       [
         469,
@@ -270,7 +270,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite11_t.png",
+    "filename": "Rückseite11_t.png",
     "lines":[
       [
         437,
@@ -288,7 +288,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite17_t.png",
+    "filename": "Rückseite17_t.png",
    "lines":[
       [
         503,
@@ -306,7 +306,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite19_t.png",
+    "filename": "Rückseite19_t.png",
     "lines":[
       [
         500,
@@ -324,7 +324,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite20_t.png",
+    "filename": "Rückseite20_t.png",
     "lines":[
       [
         484,
@@ -342,7 +342,7 @@
     "width":2048
   },
   {
-    "Filename": "Rückseite22_t.png",
+    "filename": "Rückseite22_t.png",
     "lines":[
       [
         428,
@@ -360,7 +360,7 @@
     "width":2048
   },
   {
-    "Filename": "test0.png",
+    "filename": "test0.png",
     "lines":[
       [
         115,
@@ -378,7 +378,7 @@
     "width":2048
   },
   {
-    "Filename": "test00.png",
+    "filename": "test00.png",
     "lines":[
       [
         107,
@@ -396,7 +396,7 @@
     "width":2048
   },
   {
-    "Filename": "test0000.png",
+    "filename": "test0000.png",
     "lines":[
       [
         111,
@@ -414,7 +414,7 @@
     "width":2048
   },
   {
-    "Filename": "test1.png",
+    "filename": "test1.png",
     "lines":[
       [
         114,
@@ -432,7 +432,7 @@
     "width":2048
   },
   {
-    "Filename": "test2.png",
+    "filename": "test2.png",
     "lines":[
       [
         114,
@@ -450,7 +450,7 @@
     "width":2048
   },
   {
-    "Filename": "test10.png",
+    "filename": "test10.png",
    "lines":[
       [
         109,
@@ -468,7 +468,7 @@
     "width":2048
   },
   {
-    "Filename": "test40.png",
+    "filename": "test40.png",
     "lines":[
       [
         109,
@@ -486,7 +486,7 @@
     "width":2048
   },
   {
-    "Filename": "test1000.png",
+    "filename": "test1000.png",
     "lines":[
       [
         109,
@@ -504,7 +504,7 @@
     "width":2048
   },
   {
-    "Filename": "test2000.png",
+    "filename": "test2000.png",
     "lines":[
       [
         108,
@@ -522,7 +522,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite1.png",
+    "filename": "Vorderseite1.png",
     "lines":[
       [
         470,
@@ -540,7 +540,7 @@
     "width":2048
   },
   { 
-    "Filename": "Vorderseite3_t.png",
+    "filename": "Vorderseite3_t.png",
     "lines":[
       [
         550,
@@ -558,7 +558,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite4_t.png",
+    "filename": "Vorderseite4_t.png",
     "lines":[
       [
         551,
@@ -576,7 +576,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite5_t.png",
+    "filename": "Vorderseite5_t.png",
     "lines":[
       [
         550,
@@ -594,7 +594,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite14_t.png",
+    "filename": "Vorderseite14_t.png",
    "lines":[
       [
         430,
@@ -612,7 +612,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite16_t.png",
+    "filename": "Vorderseite16_t.png",
     "lines":[
       [
         486,
@@ -630,7 +630,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite19_t.png",
+    "filename": "Vorderseite19_t.png",
     "lines":[
       [
         390,
@@ -648,7 +648,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite21_t.png",
+    "filename": "Vorderseite21_t.png",
     "lines":[
       [
         430,
@@ -666,7 +666,7 @@
     "width":2048
   },
   {
-    "Filename": "Vorderseite24_t.png",
+    "filename": "Vorderseite24_t.png",
     "lines":[
       [
         371,
