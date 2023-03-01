@@ -432,24 +432,6 @@
     "width":2048
   },
   {
-    "filename": "Vorderseite18_e.png",
-   "lines":[
-      [
-        0,
-	0,
-	0,
-	0	
-      ],
-      [ 365,
-	630,
-	0,
-	0
-      ]
-    ],
-   "height":1536,
-    "width":2048
-  },
-  {
     "filename": "Vorderseite20_e.png",
     "lines":[
       [
