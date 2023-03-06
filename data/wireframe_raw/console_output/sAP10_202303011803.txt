@@ -1,0 +1,2 @@
+using config:  mlsd_pytorch/configs/mobilev2_mlsd_tiny_512_base2_bsize24.yaml
+====> sAP10.0: 0.10166419422481217
