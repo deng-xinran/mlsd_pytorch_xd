@@ -340,8 +340,8 @@ class Line_Dataset(Dataset):
             label = np.zeros((2 * 7 + 2, self.input_size // 2, self.input_size // 2), dtype=np.float32)
             label[0:7, :, :] = sol_mask
             label[7:14, :, :] = tp_mask
-            label[14, :, :] = junction_map[0]
-            label[15, :, :] = line_map[0]
+            label[14, :, :] = junction_map[:, :, 0]
+            label[15, :, :] = line_map[:, :, 0]
             if not do_aug and self.with_cache:
                 #
                 if self.cache_to_mem:
