@@ -50,7 +50,7 @@ The structure of the data folder should be
 ```shell
 data/
    wireframe_raw/images/*.png
-   wireframe_raw/train.json
+   wireframe_raw/train_0.json
    wireframe_raw/valid.json
 
 ```
