@@ -88,18 +88,34 @@ class model_graph:
         self.args = args
 
 
-    def load(self, model_dir, mode_type):
-        model_path = model_dir +"/mlsd_tiny_512_fp32.pth"
-        if mode_type == 'large':
-            model_path = model_dir +"/mlsd_large_512_fp32.pth"
-            # torch_model = MobileV2_MLSD_Large().cuda().eval()
-            torch_model = MobileV2_MLSD_Large().eval()
-        else:
-            # torch_model = MobileV2_MLSD_Tiny().cuda().eval()
-            torch_model = MobileV2_MLSD_Tiny().eval()
-
+    def load(self, model_dir, model_type):
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        torch_model.load_state_dict(torch.load(model_path, map_location=device), strict=True)
+
+        model_path = model_dir +"/mlsd_"+model_type+"_512_fp32.pth"
+        if model_type == 'large':
+            torch_model = MobileV2_MLSD_Large().to(device).eval()
+        elif model_type == 'tiny':
+            torch_model = MobileV2_MLSD_Tiny().to(device).eval()
+        else:  # TODO: remove this
+            model_path = model_dir + "/latest.pth"
+
+            from mlsd_pytorch.cfg.default import get_cfg_defaults
+            from mlsd_pytorch.models.build_model import build_model
+
+            cfg = get_cfg_defaults()
+
+            cfg_filename_tmplist = model_dir.strip('/').split('/')[-1].split('_')  # TODO: rm this var
+            cfg_filename_tmplist[4:4] = ['base2']
+
+            train_config = f"mlsd_pytorch/configs/{'_'.join(cfg_filename_tmplist)}.yaml"
+
+            if os.path.exists(train_config):
+                print('using config: ', train_config.strip())
+                cfg.merge_from_file(train_config)
+                print(cfg)
+            torch_model = build_model(cfg).to(device).eval()
+
+        torch_model.load_state_dict(torch.load(model_path, map_location=device), strict=False)
         self.torch_model = torch_model
 
         return torch_model
