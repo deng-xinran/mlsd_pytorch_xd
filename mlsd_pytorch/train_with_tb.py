@@ -13,7 +13,8 @@ from  mlsd_pytorch.optim.lr_scheduler import WarmupMultiStepLR
 from  mlsd_pytorch.data import  get_train_dataloader, get_val_dataloader
 from  mlsd_pytorch.learner import Simple_MLSD_Learner
 from  mlsd_pytorch.models.build_model import  build_model
-
+from  torch.utils.tensorboard import SummaryWriter #add tensorboard to
+#from mlsd_pytorch.loss.mlsd_multi_loss import displacement_loss_func, len_and_angle_loss_func, focal_neg_loss_with_logits
 
 import  argparse
 def get_args():
@@ -24,13 +25,15 @@ def get_args():
                         help="")
     return parser.parse_args()
 
-def train(cfg):
+
+
+def train(cfg, writer):
     train_loader = get_train_dataloader(cfg)
     val_loader   = get_val_dataloader(cfg)
     model = build_model(cfg).cuda()
 
 
-    #print(model)
+    print(model)
     if os.path.exists(cfg.train.load_from):
         print('load from: ', cfg.train.load_from)
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -69,6 +72,8 @@ def train(cfg):
 
     create_dir(cfg.train.save_dir)
     logger = TxtLogger(cfg.train.save_dir + "/train_logger.txt")
+    #writer = SummaryWriter(cfg.train.save_dir + "/log")
+
     learner =  Simple_MLSD_Learner(
         cfg,
         model = model,
@@ -85,22 +90,17 @@ def train(cfg):
 
     #learner.val(model, val_loader)
     #learner.val(model, train_loader)
+    loss, loss_dict = learner.step(dict)
     learner.train(train_loader, val_loader, epoches= cfg.train.num_train_epochs)
+
+    writer.add_scalar('train/loss', loss.item(), learner.global_step)# Record loss to TensorBoard
+    writer.flush()
 
 
 if __name__ == '__main__':
     setup_seed(6666)
-    x = torch.arange(-5, 5, 0.1).view(-1, 1)
-    y = -5 * x + 0.1 * torch.randn(x.size())
     cfg = get_cfg_defaults()
     args = get_args()
-   for epoch in range(iter):
-       y1 = build_model(x)
-       loss = criterion(y1, y)
-       wirter.add.scalar("loss/train", loss, epoch)
-       optimizer.zero_grad()
-       loss.backward()
-       optiminzer.step()
 
     if args.config.endswith('\r'):
         args.config = args.config[:-1]
@@ -114,4 +114,7 @@ if __name__ == '__main__':
         f.write(cfg_str)
     f.close()
 
-    train(cfg)
+
+    writer = SummaryWriter(log_dir=cfg.train.save_dir) # Create SummaryWriter object
+    train(cfg, writer) # Pass SummaryWriter object to train() function
+    #train(cfg)
