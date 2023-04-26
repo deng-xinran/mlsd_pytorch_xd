@@ -14,8 +14,8 @@ from mlsd_pytorch.utils.decode import deccode_lines_TP
 from mlsd_pytorch.data.utils import deccode_lines
 from mlsd_pytorch.loss import LineSegmentLoss
 from mlsd_pytorch.metric import F1_score_128, TPFP, msTPFP, AP
+
 from torch.utils.tensorboard import SummaryWriter
-#writer = SummaryWriter('run')
 
 # from apex.fp16_utils import *
 # from apex import amp, optimizers
@@ -66,7 +66,7 @@ class Simple_MLSD_Learner():
             loss = loss / self.gradient_accum_steps
             
         #with amp.scale_loss(loss, self.optimizer) as scaled_loss:
-        #    scaled_loss.backward()
+        #scaled_loss.backward()
         loss.backward()
         
         torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.max_grad_norm)
@@ -75,8 +75,10 @@ class Simple_MLSD_Learner():
             self.scheduler.step()  # Update learning rate schedule
             self.model.zero_grad()
             self.global_step += 1
-        return loss, loss_dict
 
+        writer = SummaryWriter(self.cfg.train.save_dir + '/logs')
+        writer.add_scalar('train/loss', loss.item(), )
+        return loss, loss_dict
 
     def val(self, model, val_dataloader : DataLoader):
         thresh = self.cfg.decode.score_thresh
