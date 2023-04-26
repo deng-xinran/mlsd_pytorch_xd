@@ -11,9 +11,9 @@ from mlsd_pytorch.cfg.default import get_cfg_defaults
 from mlsd_pytorch.optim.lr_scheduler import WarmupMultiStepLR
 
 from mlsd_pytorch.data import get_train_dataloader, get_val_dataloader
-from mlsd_pytorch.learner import Simple_MLSD_Learner
+from mlsd_pytorch.learner_with_tb import Simple_MLSD_Learner
 from mlsd_pytorch.models.build_model import build_model
-#from torch.utils.tensorboard import SummaryWriter #add tensorboard
+from torch.utils.tensorboard import SummaryWriter #add tensorboard
 
 
 import  argparse
@@ -27,7 +27,7 @@ def get_args():
 
 
 
-def train(cfg, writer):
+def train(cfg):
     train_loader = get_train_dataloader(cfg)
     val_loader = get_val_dataloader(cfg)
     model = build_model(cfg).cuda()
@@ -72,7 +72,7 @@ def train(cfg, writer):
 
     create_dir(cfg.train.save_dir)
     logger = TxtLogger(cfg.train.save_dir + "/train_logger.txt")
-    #writer = SummaryWriter(cfg.train.save_dir + "/log")
+    writer = SummaryWriter(cfg.train.save_dir + "/logs")
 
     learner = Simple_MLSD_Learner(
         cfg,
@@ -86,15 +86,17 @@ def train(cfg, writer):
         gradient_accum_steps=1,
         max_grad_norm=1000.0,
         batch_to_model_inputs_fn=None,
-        early_stop_n=cfg.train.early_stop_n)
+        early_stop_n=cfg.train.early_stop_n,
+        writer=writer
+    )
 
     #learner.val(model, val_loader)
     #learner.val(model, train_loader)
     #loss, loss_dict = learner.step()
     learner.train(train_loader, val_loader, epoches=cfg.train.num_train_epochs)
 
-    writer.add_scalar('train/loss', loss.item(), learner.global_step) #Record loss to TensorBoard
     writer.flush()
+    writer.close()
 
 
 if __name__ == '__main__':
@@ -117,4 +119,4 @@ if __name__ == '__main__':
 
     # writer = SummaryWriter(log_dir=cfg.train.save_dir) # Create SummaryWriter object
     # train(cfg, writer) # Pass SummaryWriter object to train() function
-    #train(cfg)
+    train(cfg)

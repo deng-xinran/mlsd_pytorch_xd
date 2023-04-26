@@ -6,6 +6,7 @@ from torch.nn import functional as F
 import torch.nn as nn
 from torch.utils.data import  Dataset, DataLoader
 from torch.optim.optimizer import Optimizer
+from torch.utils.tensorboard import SummaryWriter
 
 from mlsd_pytorch.utils.logger import TxtLogger
 from mlsd_pytorch.utils.meter import AverageMeter
@@ -14,8 +15,6 @@ from mlsd_pytorch.utils.decode import deccode_lines_TP
 from mlsd_pytorch.data.utils import deccode_lines
 from mlsd_pytorch.loss import LineSegmentLoss
 from mlsd_pytorch.metric import F1_score_128, TPFP, msTPFP, AP
-
-from torch.utils.tensorboard import SummaryWriter
 
 # from apex.fp16_utils import *
 # from apex import amp, optimizers
@@ -34,6 +33,8 @@ class Simple_MLSD_Learner():
                  max_grad_norm = 100.0,
                  batch_to_model_inputs_fn = None,
                  early_stop_n = 4,
+
+                 writer = None
                  ):
         self.cfg = cfg
         self.model  = model
@@ -52,6 +53,9 @@ class Simple_MLSD_Learner():
         self.input_size = self.cfg.datasets.input_size
         self.loss_fn = LineSegmentLoss(cfg)
         self.epo = 0
+
+        # TODO: remove else
+        self.writer = writer if writer is not None else SummaryWriter(self.save_dir + '/logs')
 
 
     def step(self,step_n,  batch_data : dict):
@@ -76,8 +80,7 @@ class Simple_MLSD_Learner():
             self.model.zero_grad()
             self.global_step += 1
 
-        writer = SummaryWriter(self.cfg.train.save_dir + '/logs')
-        writer.add_scalar('train/loss', loss.item(), )
+        self.writer.add_scalar('train/loss', loss.item(), self.global_step)
         return loss, loss_dict
 
     def val(self, model, val_dataloader : DataLoader):
@@ -157,7 +160,10 @@ class Simple_MLSD_Learner():
         self.logger.write("==>step: {}, f_score: {}, recall: {}, precision:{}, sAP10: {}\n ".
                           format(self.global_step, f_score, recall, precision, sAP))
 
-
+        self.writer.add_scalar('val/fscore', f_score.item(), self.global_step)
+        self.writer.add_scalar('val/recall', recall.item(), self.global_step)
+        self.writer.add_scalar('val/precision', precision.item(), self.global_step)
+        self.writer.add_scalar('val/sAP10', sAP.item(), self.global_step)
         return {
             'fscore': f_score,
             'recall': recall,
