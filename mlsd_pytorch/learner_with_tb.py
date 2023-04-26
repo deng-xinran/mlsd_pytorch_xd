@@ -14,6 +14,8 @@ from mlsd_pytorch.utils.decode import deccode_lines_TP
 from mlsd_pytorch.data.utils import deccode_lines
 from mlsd_pytorch.loss import LineSegmentLoss
 from mlsd_pytorch.metric import F1_score_128, TPFP, msTPFP, AP
+from torch.utils.tensorboard import SummaryWriter
+#writer = SummaryWriter('run')
 
 # from apex.fp16_utils import *
 # from apex import amp, optimizers
@@ -185,7 +187,7 @@ class Simple_MLSD_Learner():
             data_iter = tqdm.tqdm(train_dataloader)
             for batch in data_iter:
                 self.model.train()
-                train_loss,loss_dict = self.step(step_n, batch)
+                train_loss, loss_dict = self.step(step_n, batch)
                 train_avg_loss.update(train_loss.item(),1)
 
                 train_avg_center_loss.update(loss_dict['center_loss'].item() ,1)
