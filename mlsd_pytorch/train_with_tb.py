@@ -5,22 +5,22 @@ import sys
 
 sys.path.append(os.path.dirname(__file__)+'/../')
 
-from  mlsd_pytorch.utils.logger import TxtLogger
-from  mlsd_pytorch.utils.comm import setup_seed, create_dir
-from  mlsd_pytorch.cfg.default import  get_cfg_defaults
-from  mlsd_pytorch.optim.lr_scheduler import WarmupMultiStepLR
+from mlsd_pytorch.utils.logger import TxtLogger
+from mlsd_pytorch.utils.comm import setup_seed, create_dir
+from mlsd_pytorch.cfg.default import get_cfg_defaults
+from mlsd_pytorch.optim.lr_scheduler import WarmupMultiStepLR
 
-from  mlsd_pytorch.data import  get_train_dataloader, get_val_dataloader
-from  mlsd_pytorch.learner import Simple_MLSD_Learner
-from  mlsd_pytorch.models.build_model import  build_model
-from  torch.utils.tensorboard import SummaryWriter #add tensorboard to
-#from mlsd_pytorch.loss.mlsd_multi_loss import displacement_loss_func, len_and_angle_loss_func, focal_neg_loss_with_logits
+from mlsd_pytorch.data import get_train_dataloader, get_val_dataloader
+from mlsd_pytorch.learner import Simple_MLSD_Learner
+from mlsd_pytorch.models.build_model import build_model
+from torch.utils.tensorboard import SummaryWriter #add tensorboard
+
 
 import  argparse
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config",
-                        default= os.path.dirname(__file__)+ '/configs/mobilev2_mlsd_tiny_512_base.yaml',
+                        default=os.path.dirname(__file__)+'/configs/mobilev2_mlsd_tiny_512_base.yaml',
                         type=str,
                         help="")
     return parser.parse_args()
@@ -29,7 +29,7 @@ def get_args():
 
 def train(cfg, writer):
     train_loader = get_train_dataloader(cfg)
-    val_loader   = get_val_dataloader(cfg)
+    val_loader = get_val_dataloader(cfg)
     model = build_model(cfg).cuda()
 
 
@@ -37,7 +37,7 @@ def train(cfg, writer):
     if os.path.exists(cfg.train.load_from):
         print('load from: ', cfg.train.load_from)
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        model.load_state_dict(torch.load(cfg.train.load_from,map_location=device),strict=False)
+        model.load_state_dict(torch.load(cfg.train.load_from, map_location=device), strict=False)
 
     if cfg.train.milestones_in_epo:
         ns = len(train_loader)
@@ -46,14 +46,14 @@ def train(cfg, writer):
             milestones.append(m * ns)
         cfg.train.milestones = milestones
 
-    optimizer = torch.optim.Adam(params=model.parameters(),lr=cfg.train.learning_rate,weight_decay=cfg.train.weight_decay)
+    optimizer = torch.optim.Adam(params=model.parameters(), lr=cfg.train.learning_rate, weight_decay=cfg.train.weight_decay)
 
     if cfg.train.use_step_lr_policy:
 
         lr_scheduler = WarmupMultiStepLR(
             optimizer,
-            milestones= cfg.train.milestones,
-            gamma = cfg.train.lr_decay_gamma,
+            milestones=cfg.train.milestones,
+            gamma=cfg.train.lr_decay_gamma,
             warmup_iters=cfg.train.warmup_steps,
         )
     else: ## similiar with in the paper
@@ -74,26 +74,26 @@ def train(cfg, writer):
     logger = TxtLogger(cfg.train.save_dir + "/train_logger.txt")
     #writer = SummaryWriter(cfg.train.save_dir + "/log")
 
-    learner =  Simple_MLSD_Learner(
+    learner = Simple_MLSD_Learner(
         cfg,
-        model = model,
-        optimizer = optimizer,
-        scheduler = lr_scheduler,
-        logger = logger,
-        save_dir = cfg.train.save_dir,
-        log_steps = cfg.train.log_steps,
-        device_ids = cfg.train.device_ids,
-        gradient_accum_steps = 1,
-        max_grad_norm = 1000.0,
-        batch_to_model_inputs_fn = None,
-        early_stop_n= cfg.train.early_stop_n)
+        model=model,
+        optimizer=optimizer,
+        scheduler=lr_scheduler,
+        logger=logger,
+        save_dir=cfg.train.save_dir,
+        log_steps=cfg.train.log_steps,
+        device_ids=cfg.train.device_ids,
+        gradient_accum_steps=1,
+        max_grad_norm=1000.0,
+        batch_to_model_inputs_fn=None,
+        early_stop_n=cfg.train.early_stop_n)
 
     #learner.val(model, val_loader)
     #learner.val(model, train_loader)
-    loss, loss_dict = learner.step(dict)
-    learner.train(train_loader, val_loader, epoches= cfg.train.num_train_epochs)
+    loss, loss_dict = learner.step()
+    learner.train(train_loader, val_loader, epoches=cfg.train.num_train_epochs)
 
-    writer.add_scalar('train/loss', loss.item(), learner.global_step)# Record loss to TensorBoard
+    writer.add_scalar('train/loss', loss.item(), learner.global_step) #Record loss to TensorBoard
     writer.flush()
 
 
