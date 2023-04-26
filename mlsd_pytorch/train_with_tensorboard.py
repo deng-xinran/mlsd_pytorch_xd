@@ -2,6 +2,8 @@ import  os
 import torch
 import math
 import sys
+from torch.utils.tensdrboard import SummaryWriter
+writer = SummaryWriter(cfg.train.save.dir + '/logs')
 
 sys.path.append(os.path.dirname(__file__)+'/../')
 
@@ -90,18 +92,8 @@ def train(cfg):
 
 if __name__ == '__main__':
     setup_seed(6666)
-    x = torch.arange(-5, 5, 0.1).view(-1, 1)
-    y = -5 * x + 0.1 * torch.randn(x.size())
     cfg = get_cfg_defaults()
     args = get_args()
-   for epoch in range(iter):
-       y1 = build_model(x)
-       loss = criterion(y1, y)
-       wirter.add.scalar("loss/train", loss, epoch)
-       optimizer.zero_grad()
-       loss.backward()
-       optiminzer.step()
-
     if args.config.endswith('\r'):
         args.config = args.config[:-1]
     print('using config: ',args.config.strip())
