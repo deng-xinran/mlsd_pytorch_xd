@@ -1,0 +1,1 @@
+using config:  mlsd_pytorch/pytorch/configs/mobilev2_mlsd_tiny_512_base2_bsize24.yaml

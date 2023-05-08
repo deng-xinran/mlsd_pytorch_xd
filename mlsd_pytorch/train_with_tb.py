@@ -1,3 +1,4 @@
+import datetime
 import  os
 import torch
 import math
@@ -108,6 +109,8 @@ if __name__ == '__main__':
         args.config = args.config[:-1]
     print('using config: ',args.config.strip())
     cfg.merge_from_file(args.config)
+
+    cfg.train.save_dir = cfg.train.save_dir.rstrip('/') + datetime.datetime.now().isoformat() + '/'
     print(cfg)
 
     create_dir(cfg.train.save_dir)
