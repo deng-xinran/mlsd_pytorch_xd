@@ -28,7 +28,7 @@ train:
 
 val:
     img_dir: "./data/wireframe_raw/images/"
-    label_fn: "./data/wireframe_raw/valid.json"
+    label_fn: "./data/wireframe_raw/valid_1.json"
     batch_size: 8
     val_after_epoch: 50
 

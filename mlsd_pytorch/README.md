@@ -51,7 +51,7 @@ The structure of the data folder should be
 data/
    wireframe_raw/images/*.png
    wireframe_raw/train_0.json
-   wireframe_raw/valid.json
+   wireframe_raw/valid_1.json
 
 ```
 ### Train
