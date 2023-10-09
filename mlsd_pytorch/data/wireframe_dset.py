@@ -445,7 +445,7 @@ if __name__ == '__main__':
 
     root_dir = "/home/lhw/m2_disk/data/czcv_2021/wireframe_raw/"
     cfg.train.img_dir = root_dir+ "/images/"
-    cfg.train.label_fn = root_dir+ "/valid.json"
+    cfg.train.label_fn = root_dir+ "/valid_1.json"
     cfg.train.batch_size = 1
     cfg.train.data_cache_dir = "/home/lhw/m2_disk/data/czcv_2021/wireframe_cache/"
     cfg.train.with_cache = True
