@@ -1,0 +1,829 @@
+using config:  mlsd_pytorch/configs/mobilev2_mlsd_tiny_512_base2_bsize16_lr001.yaml
+datasets:
+  input_size: 512
+  name: wireframe
+  with_centermap_extend: False
+decode:
+  len_thresh: 5
+  score_thresh: 0.05
+  top_k: 500
+loss:
+  focal_loss_level: 0
+  loss_type: 1*L1
+  loss_weight_dict_list: [{'tp_center_loss': 10.0, 'sol_center_loss': 1.0, 'tp_match_loss': 1.0}]
+  match_sap_thresh: 5.0
+  with_focal_loss: True
+  with_match_loss: False
+  with_sol_loss: True
+model:
+  model_name: mobilev2_mlsd
+  num_classes: 1
+  with_deconv: True
+sys:
+  cpu: False
+  gpus: 1
+  num_workers: 8
+train:
+  adam_epsilon: 1e-06
+  batch_size: 16
+  cache_to_mem: False
+  data_cache_dir: ./data/wireframe_cache/
+  device_ids: [0]
+  device_ids_str: 0
+  do_train: True
+  dropout: 0.1
+  early_stop_n: 200
+  gradient_accumulation_steps: 1
+  img_dir: ./data/wireframe_raw/images/
+  label_fn: ./data/wireframe_raw/train.json
+  learning_rate: 0.01
+  load_from: 
+  log_steps: 50
+  lr_decay_gamma: 0.2
+  milestones: [50, 100, 150]
+  milestones_in_epo: True
+  num_train_epochs: 155
+  num_workers: 8
+  save_dir: ./workdir/models/mobilev2_mlsd_tiny_512_bsize242023-10-06T22:00:20.520746/
+  use_step_lr_policy: True
+  warmup_steps: 100
+  weight_decay: 1e-06
+  with_cache: False
+val:
+  batch_size: 8
+  img_dir: ./data/wireframe_raw/images/
+  label_fn: ./data/wireframe_raw/valid.json
+  val_after_epoch: 50
+==> load label..
+==> valid samples:  23
+==> load label..
+==> valid samples:  20
+MobileV2_MLSD(
+  (backbone): MobileNetV2(
+    (features): Sequential(
+      (0): ConvBNReLU(
+        (0): Conv2d(3, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU6(inplace=True)
+        (max_pool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      )
+      (1): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=32, bias=False)
+            (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): Conv2d(32, 16, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (2): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (2): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(16, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): ConvBNReLU(
+            (0): Conv2d(96, 96, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=96, bias=False)
+            (1): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+          )
+          (2): Conv2d(96, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (3): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (3): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): ConvBNReLU(
+            (0): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=144, bias=False)
+            (1): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (2): Conv2d(144, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (3): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (4): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): ConvBNReLU(
+            (0): Conv2d(144, 144, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=144, bias=False)
+            (1): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+          )
+          (2): Conv2d(144, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (3): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (5): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(32, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): ConvBNReLU(
+            (0): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=192, bias=False)
+            (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (2): Conv2d(192, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (3): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (6): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(32, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): ConvBNReLU(
+            (0): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=192, bias=False)
+            (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (2): Conv2d(192, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (3): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (7): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(32, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): ConvBNReLU(
+            (0): Conv2d(192, 192, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=192, bias=False)
+            (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+          )
+          (2): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (3): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (8): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(64, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): ConvBNReLU(
+            (0): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (2): Conv2d(384, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (3): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (9): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(64, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): ConvBNReLU(
+            (0): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (2): Conv2d(384, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (3): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (10): InvertedResidual(
+        (conv): Sequential(
+          (0): ConvBNReLU(
+            (0): Conv2d(64, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (1): ConvBNReLU(
+            (0): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU6(inplace=True)
+            (max_pool): MaxPool2d(kernel_size=1, stride=1, padding=0, dilation=1, ceil_mode=False)
+          )
+          (2): Conv2d(384, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (3): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+    )
+  )
+  (block12): BlockTypeA(
+    (conv1): Sequential(
+      (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+    )
+    (conv2): Sequential(
+      (0): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+    )
+  )
+  (block13): BlockTypeB(
+    (conv1): Sequential(
+      (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (conv2): Sequential(
+      (0): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+  )
+  (block14): BlockTypeA(
+    (conv1): Sequential(
+      (0): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+    )
+    (conv2): Sequential(
+      (0): Conv2d(24, 32, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+    )
+  )
+  (block15): BlockTypeB(
+    (conv1): Sequential(
+      (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (conv2): Sequential(
+      (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+  )
+  (block16): BlockTypeC(
+    (conv1): Sequential(
+      (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(5, 5), dilation=(5, 5))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (conv2): Sequential(
+      (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (conv3): Conv2d(64, 16, kernel_size=(1, 1), stride=(1, 1))
+  )
+  (block17): BilinearConvTranspose2d(16, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+)
+===> loss weight:  {'tp_center_loss': 10.0, 'tp_displacement_loss': 1.0, 'tp_len_loss': 1.0, 'tp_angle_loss': 1.0, 'tp_match_loss': 1.0, 'tp_centerness_loss': 1.0, 'sol_center_loss': 1.0, 'sol_displacement_loss': 1.0, 'sol_len_loss': 1.0, 'sol_angle_loss': 1.0, 'sol_match_loss': 1.0, 'sol_centerness_loss': 1.0, 'line_seg_loss': 1.0, 'junc_seg_loss': 1.0}
+==>step: 52, f_score: 0.19100691378116608, recall: 0.2362726479768753, precision:0.19915559887886047, sAP10: 0.0
+ 
+epo: 51, steps: 52 ,sAP10 : 0.0000 , best sAP10: 0.0000
+{'fscore': 0.19100691, 'recall': 0.23627265, 'precision': 0.1991556, 'sAP10': 0.0}
+====================================================================================================
+==>step: 53, f_score: 0.25023353099823, recall: 0.29733797907829285, precision:0.2753232717514038, sAP10: 0.0
+ 
+epo: 52, steps: 53 ,sAP10 : 0.0000 , best sAP10: 0.0000
+{'fscore': 0.25023353, 'recall': 0.29733798, 'precision': 0.27532327, 'sAP10': 0.0}
+====================================================================================================
+==>step: 54, f_score: 0.3076944053173065, recall: 0.36391329765319824, precision:0.3308713138103485, sAP10: 0.0
+ 
+epo: 53, steps: 54 ,sAP10 : 0.0000 , best sAP10: 0.0000
+{'fscore': 0.3076944, 'recall': 0.3639133, 'precision': 0.3308713, 'sAP10': 0.0}
+====================================================================================================
+==>step: 55, f_score: 0.37267380952835083, recall: 0.4218119978904724, precision:0.3854697346687317, sAP10: 0.07407407407407408
+ 
+epo: 54, steps: 55 ,sAP10 : 0.0741 , best sAP10: 0.0741
+{'fscore': 0.3726738, 'recall': 0.421812, 'precision': 0.38546973, 'sAP10': 0.07407407407407408}
+====================================================================================================
+==>step: 56, f_score: 0.39219704270362854, recall: 0.4484524726867676, precision:0.40480050444602966, sAP10: 0.1160581222056632
+ 
+epo: 55, steps: 56 ,sAP10 : 0.1161 , best sAP10: 0.1161
+{'fscore': 0.39219704, 'recall': 0.44845247, 'precision': 0.4048005, 'sAP10': 0.1160581222056632}
+====================================================================================================
+==>step: 57, f_score: 0.3854840397834778, recall: 0.43380141258239746, precision:0.40519946813583374, sAP10: 0.2165607267568747
+ 
+epo: 56, steps: 57 ,sAP10 : 0.2166 , best sAP10: 0.2166
+{'fscore': 0.38548404, 'recall': 0.4338014, 'precision': 0.40519947, 'sAP10': 0.2165607267568747}
+====================================================================================================
+==>step: 58, f_score: 0.3675023317337036, recall: 0.4048137068748474, precision:0.3912257254123688, sAP10: 0.37956289235061613
+ 
+epo: 57, steps: 58 ,sAP10 : 0.3796 , best sAP10: 0.3796
+{'fscore': 0.36750233, 'recall': 0.4048137, 'precision': 0.39122573, 'sAP10': 0.37956289235061613}
+====================================================================================================
+==>step: 59, f_score: 0.3360825181007385, recall: 0.3568836748600006, precision:0.3731791377067566, sAP10: 0.4689931463627256
+ 
+epo: 58, steps: 59 ,sAP10 : 0.4690 , best sAP10: 0.4690
+{'fscore': 0.33608252, 'recall': 0.35688367, 'precision': 0.37317914, 'sAP10': 0.4689931463627256}
+====================================================================================================
+==>step: 60, f_score: 0.32352080941200256, recall: 0.3434496521949768, precision:0.36313942074775696, sAP10: 0.4407051282051283
+ 
+epo: 59, steps: 60 ,sAP10 : 0.4407 , best sAP10: 0.4690
+{'fscore': 0.3235208, 'recall': 0.34344965, 'precision': 0.36313942, 'sAP10': 0.4407051282051283}
+====================================================================================================
+==>step: 61, f_score: 0.3353079557418823, recall: 0.3559381365776062, precision:0.3734051585197449, sAP10: 0.5000000000000001
+ 
+epo: 60, steps: 61 ,sAP10 : 0.5000 , best sAP10: 0.5000
+{'fscore': 0.33530796, 'recall': 0.35593814, 'precision': 0.37340516, 'sAP10': 0.5000000000000001}
+====================================================================================================
+==>step: 62, f_score: 0.35933029651641846, recall: 0.38697901368141174, precision:0.39168572425842285, sAP10: 0.0
+ 
+epo: 61, steps: 62 ,sAP10 : 0.0000 , best sAP10: 0.5000
+{'fscore': 0.3593303, 'recall': 0.386979, 'precision': 0.39168572, 'sAP10': 0.0}
+====================================================================================================
+==>step: 63, f_score: 0.36519113183021545, recall: 0.3941473066806793, precision:0.39609986543655396, sAP10: 0.0
+ 
+epo: 62, steps: 63 ,sAP10 : 0.0000 , best sAP10: 0.5000
+{'fscore': 0.36519113, 'recall': 0.3941473, 'precision': 0.39609987, 'sAP10': 0.0}
+====================================================================================================
+==>step: 64, f_score: 0.3749742805957794, recall: 0.40558773279190063, precision:0.4026246964931488, sAP10: 0.037313432835820906
+ 
+epo: 63, steps: 64 ,sAP10 : 0.0373 , best sAP10: 0.5000
+{'fscore': 0.37497428, 'recall': 0.40558773, 'precision': 0.4026247, 'sAP10': 0.037313432835820906}
+====================================================================================================
+==>step: 65, f_score: 0.3995259404182434, recall: 0.44079095125198364, precision:0.40801841020584106, sAP10: 0.0
+ 
+epo: 64, steps: 65 ,sAP10 : 0.0000 , best sAP10: 0.5000
+{'fscore': 0.39952594, 'recall': 0.44079095, 'precision': 0.4080184, 'sAP10': 0.0}
+====================================================================================================
+==>step: 66, f_score: 0.4103975296020508, recall: 0.439694881439209, precision:0.4200361669063568, sAP10: 0.0
+ 
+epo: 65, steps: 66 ,sAP10 : 0.0000 , best sAP10: 0.5000
+{'fscore': 0.41039753, 'recall': 0.43969488, 'precision': 0.42003617, 'sAP10': 0.0}
+====================================================================================================
+==>step: 67, f_score: 0.4050399363040924, recall: 0.43329110741615295, precision:0.41574206948280334, sAP10: 0.0
+ 
+epo: 66, steps: 67 ,sAP10 : 0.0000 , best sAP10: 0.5000
+{'fscore': 0.40503994, 'recall': 0.4332911, 'precision': 0.41574207, 'sAP10': 0.0}
+====================================================================================================
+==>step: 68, f_score: 0.4142301082611084, recall: 0.456134170293808, precision:0.40951186418533325, sAP10: 0.0
+ 
+epo: 67, steps: 68 ,sAP10 : 0.0000 , best sAP10: 0.5000
+{'fscore': 0.4142301, 'recall': 0.45613417, 'precision': 0.40951186, 'sAP10': 0.0}
+====================================================================================================
+==>step: 69, f_score: 0.4273260235786438, recall: 0.4783118665218353, precision:0.4143892824649811, sAP10: 0.0
+ 
+epo: 68, steps: 69 ,sAP10 : 0.0000 , best sAP10: 0.5000
+{'fscore': 0.42732602, 'recall': 0.47831187, 'precision': 0.41438928, 'sAP10': 0.0}
+====================================================================================================
+==>step: 70, f_score: 0.4357825219631195, recall: 0.5013556480407715, precision:0.40823298692703247, sAP10: 0.0
+ 
+epo: 69, steps: 70 ,sAP10 : 0.0000 , best sAP10: 0.5000
+{'fscore': 0.43578252, 'recall': 0.50135565, 'precision': 0.408233, 'sAP10': 0.0}
+====================================================================================================
+==>step: 71, f_score: 0.4342019557952881, recall: 0.4977848529815674, precision:0.4105231761932373, sAP10: 1.076923076923077
+ 
+epo: 70, steps: 71 ,sAP10 : 1.0769 , best sAP10: 1.0769
+{'fscore': 0.43420196, 'recall': 0.49778485, 'precision': 0.41052318, 'sAP10': 1.076923076923077}
+====================================================================================================
+==>step: 72, f_score: 0.41237592697143555, recall: 0.46523547172546387, precision:0.3992878198623657, sAP10: 3.214285714285715
+ 
+epo: 71, steps: 72 ,sAP10 : 3.2143 , best sAP10: 3.2143
+{'fscore': 0.41237593, 'recall': 0.46523547, 'precision': 0.39928782, 'sAP10': 3.214285714285715}
+====================================================================================================
+==>step: 73, f_score: 0.3963910937309265, recall: 0.43146008253097534, precision:0.40110689401626587, sAP10: 2.9375
+ 
+epo: 72, steps: 73 ,sAP10 : 2.9375 , best sAP10: 3.2143
+{'fscore': 0.3963911, 'recall': 0.43146008, 'precision': 0.4011069, 'sAP10': 2.9375}
+====================================================================================================
+==>step: 74, f_score: 0.38012340664863586, recall: 0.3876953721046448, precision:0.4073483347892761, sAP10: 2.8124999999999996
+ 
+epo: 73, steps: 74 ,sAP10 : 2.8125 , best sAP10: 3.2143
+{'fscore': 0.3801234, 'recall': 0.38769537, 'precision': 0.40734833, 'sAP10': 2.8124999999999996}
+====================================================================================================
+==>step: 75, f_score: 0.35028451681137085, recall: 0.33573511242866516, precision:0.40217190980911255, sAP10: 1.6666666666666667
+ 
+epo: 74, steps: 75 ,sAP10 : 1.6667 , best sAP10: 3.2143
+{'fscore': 0.35028452, 'recall': 0.3357351, 'precision': 0.4021719, 'sAP10': 1.6666666666666667}
+====================================================================================================
+==>step: 76, f_score: 0.31095027923583984, recall: 0.2890893816947937, precision:0.378978431224823, sAP10: 2.0000000000000004
+ 
+epo: 75, steps: 76 ,sAP10 : 2.0000 , best sAP10: 3.2143
+{'fscore': 0.31095028, 'recall': 0.28908938, 'precision': 0.37897843, 'sAP10': 2.0000000000000004}
+====================================================================================================
+==>step: 77, f_score: 0.28460246324539185, recall: 0.26168155670166016, precision:0.3623672127723694, sAP10: 2.2500000000000004
+ 
+epo: 76, steps: 77 ,sAP10 : 2.2500 , best sAP10: 3.2143
+{'fscore': 0.28460246, 'recall': 0.26168156, 'precision': 0.3623672, 'sAP10': 2.2500000000000004}
+====================================================================================================
+==>step: 78, f_score: 0.27109628915786743, recall: 0.2537215054035187, precision:0.3367273211479187, sAP10: 0.8333333333333334
+ 
+epo: 77, steps: 78 ,sAP10 : 0.8333 , best sAP10: 3.2143
+{'fscore': 0.2710963, 'recall': 0.2537215, 'precision': 0.33672732, 'sAP10': 0.8333333333333334}
+====================================================================================================
+==>step: 79, f_score: 0.2563433051109314, recall: 0.23696617782115936, precision:0.3186236023902893, sAP10: 0.8333333333333334
+ 
+epo: 78, steps: 79 ,sAP10 : 0.8333 , best sAP10: 3.2143
+{'fscore': 0.2563433, 'recall': 0.23696618, 'precision': 0.3186236, 'sAP10': 0.8333333333333334}
+====================================================================================================
+==>step: 80, f_score: 0.23759028315544128, recall: 0.22024957835674286, precision:0.29094234108924866, sAP10: 1.5476190476190477
+ 
+epo: 79, steps: 80 ,sAP10 : 1.5476 , best sAP10: 3.2143
+{'fscore': 0.23759028, 'recall': 0.22024958, 'precision': 0.29094234, 'sAP10': 1.5476190476190477}
+====================================================================================================
+==>step: 81, f_score: 0.23732569813728333, recall: 0.22109059989452362, precision:0.283181756734848, sAP10: 0.625
+ 
+epo: 80, steps: 81 ,sAP10 : 0.6250 , best sAP10: 3.2143
+{'fscore': 0.2373257, 'recall': 0.2210906, 'precision': 0.28318176, 'sAP10': 0.625}
+====================================================================================================
+==>step: 82, f_score: 0.2911432385444641, recall: 0.27492696046829224, precision:0.34308290481567383, sAP10: 0.41666666666666674
+ 
+epo: 81, steps: 82 ,sAP10 : 0.4167 , best sAP10: 3.2143
+{'fscore': 0.29114324, 'recall': 0.27492696, 'precision': 0.3430829, 'sAP10': 0.41666666666666674}
+====================================================================================================
+==>step: 83, f_score: 0.3437749743461609, recall: 0.3483850955963135, precision:0.37806805968284607, sAP10: 0.0
+ 
+epo: 82, steps: 83 ,sAP10 : 0.0000 , best sAP10: 3.2143
+{'fscore': 0.34377497, 'recall': 0.3483851, 'precision': 0.37806806, 'sAP10': 0.0}
+====================================================================================================
+==>step: 84, f_score: 0.3533507287502289, recall: 0.3603706657886505, precision:0.3852519690990448, sAP10: 1.1111111111111114
+ 
+epo: 83, steps: 84 ,sAP10 : 1.1111 , best sAP10: 3.2143
+{'fscore': 0.35335073, 'recall': 0.36037067, 'precision': 0.38525197, 'sAP10': 1.1111111111111114}
+====================================================================================================
+==>step: 85, f_score: 0.27449268102645874, recall: 0.2576494812965393, precision:0.3277420401573181, sAP10: 0.0
+ 
+epo: 84, steps: 85 ,sAP10 : 0.0000 , best sAP10: 3.2143
+{'fscore': 0.27449268, 'recall': 0.25764948, 'precision': 0.32774204, 'sAP10': 0.0}
+====================================================================================================
+==>step: 86, f_score: 0.20576688647270203, recall: 0.19089782238006592, precision:0.24531343579292297, sAP10: 0.0
+ 
+epo: 85, steps: 86 ,sAP10 : 0.0000 , best sAP10: 3.2143
+{'fscore': 0.20576689, 'recall': 0.19089782, 'precision': 0.24531344, 'sAP10': 0.0}
+====================================================================================================
+==>step: 87, f_score: 0.21003463864326477, recall: 0.1942925751209259, precision:0.25126126408576965, sAP10: 0.0
+ 
+epo: 86, steps: 87 ,sAP10 : 0.0000 , best sAP10: 3.2143
+{'fscore': 0.21003464, 'recall': 0.19429258, 'precision': 0.25126126, 'sAP10': 0.0}
+====================================================================================================
+==>step: 88, f_score: 0.2518857419490814, recall: 0.24160055816173553, precision:0.29418545961380005, sAP10: 0.0
+ 
+epo: 87, steps: 88 ,sAP10 : 0.0000 , best sAP10: 3.2143
+{'fscore': 0.25188574, 'recall': 0.24160056, 'precision': 0.29418546, 'sAP10': 0.0}
+====================================================================================================
+==>step: 89, f_score: 0.34752294421195984, recall: 0.3554309010505676, precision:0.37282994389533997, sAP10: 2.954545454545455
+ 
+epo: 88, steps: 89 ,sAP10 : 2.9545 , best sAP10: 3.2143
+{'fscore': 0.34752294, 'recall': 0.3554309, 'precision': 0.37282994, 'sAP10': 2.954545454545455}
+====================================================================================================
+==>step: 90, f_score: 0.35365208983421326, recall: 0.3673041760921478, precision:0.36863547563552856, sAP10: 0.0
+ 
+epo: 89, steps: 90 ,sAP10 : 0.0000 , best sAP10: 3.2143
+{'fscore': 0.3536521, 'recall': 0.36730418, 'precision': 0.36863548, 'sAP10': 0.0}
+====================================================================================================
+==>step: 91, f_score: 0.3485853672027588, recall: 0.35568198561668396, precision:0.3621995747089386, sAP10: 0.9090909090909092
+ 
+epo: 90, steps: 91 ,sAP10 : 0.9091 , best sAP10: 3.2143
+{'fscore': 0.34858537, 'recall': 0.355682, 'precision': 0.36219957, 'sAP10': 0.9090909090909092}
+====================================================================================================
+==>step: 92, f_score: 0.3150697946548462, recall: 0.3340786099433899, precision:0.3210920989513397, sAP10: 0.8333333333333335
+ 
+epo: 91, steps: 92 ,sAP10 : 0.8333 , best sAP10: 3.2143
+{'fscore': 0.3150698, 'recall': 0.3340786, 'precision': 0.3210921, 'sAP10': 0.8333333333333335}
+====================================================================================================
+==>step: 93, f_score: 0.3164181113243103, recall: 0.3357011079788208, precision:0.32130104303359985, sAP10: 3.392857142857143
+ 
+epo: 92, steps: 93 ,sAP10 : 3.3929 , best sAP10: 3.3929
+{'fscore': 0.3164181, 'recall': 0.3357011, 'precision': 0.32130104, 'sAP10': 3.392857142857143}
+====================================================================================================
+==>step: 94, f_score: 0.3304278254508972, recall: 0.3297017812728882, precision:0.35254916548728943, sAP10: 4.166666666666667
+ 
+epo: 93, steps: 94 ,sAP10 : 4.1667 , best sAP10: 4.1667
+{'fscore': 0.33042783, 'recall': 0.32970178, 'precision': 0.35254917, 'sAP10': 4.166666666666667}
+====================================================================================================
+==>step: 95, f_score: 0.34091922640800476, recall: 0.3358604907989502, precision:0.3692687451839447, sAP10: 5.0
+ 
+epo: 94, steps: 95 ,sAP10 : 5.0000 , best sAP10: 5.0000
+{'fscore': 0.34091923, 'recall': 0.3358605, 'precision': 0.36926875, 'sAP10': 5.0}
+====================================================================================================
+==>step: 96, f_score: 0.3263538181781769, recall: 0.315904438495636, precision:0.36302950978279114, sAP10: 0.0
+ 
+epo: 95, steps: 96 ,sAP10 : 0.0000 , best sAP10: 5.0000
+{'fscore': 0.32635382, 'recall': 0.31590444, 'precision': 0.3630295, 'sAP10': 0.0}
+====================================================================================================
+==>step: 97, f_score: 0.32652658224105835, recall: 0.3221309781074524, precision:0.3567200303077698, sAP10: 0.0
+ 
+epo: 96, steps: 97 ,sAP10 : 0.0000 , best sAP10: 5.0000
+{'fscore': 0.32652658, 'recall': 0.32213098, 'precision': 0.35672003, 'sAP10': 0.0}
+====================================================================================================
+==>step: 98, f_score: 0.3306565284729004, recall: 0.33253100514411926, precision:0.351044237613678, sAP10: 5.499999999999999
+ 
+epo: 97, steps: 98 ,sAP10 : 5.5000 , best sAP10: 5.5000
+{'fscore': 0.33065653, 'recall': 0.332531, 'precision': 0.35104424, 'sAP10': 5.499999999999999}
+====================================================================================================
+==>step: 99, f_score: 0.31022608280181885, recall: 0.3267455995082855, precision:0.31639230251312256, sAP10: 1.25
+ 
+epo: 98, steps: 99 ,sAP10 : 1.2500 , best sAP10: 5.5000
+{'fscore': 0.31022608, 'recall': 0.3267456, 'precision': 0.3163923, 'sAP10': 1.25}
+====================================================================================================
+==>step: 100, f_score: 0.38061365485191345, recall: 0.40146487951278687, precision:0.3798670172691345, sAP10: 5.666666666666667
+ 
+epo: 99, steps: 100 ,sAP10 : 5.6667 , best sAP10: 5.6667
+{'fscore': 0.38061365, 'recall': 0.40146488, 'precision': 0.37986702, 'sAP10': 5.666666666666667}
+====================================================================================================
+==>step: 101, f_score: 0.3836393654346466, recall: 0.40853291749954224, precision:0.3805144429206848, sAP10: 5.0
+ 
+epo: 100, steps: 101 ,sAP10 : 5.0000 , best sAP10: 5.6667
+{'fscore': 0.38363937, 'recall': 0.40853292, 'precision': 0.38051444, 'sAP10': 5.0}
+====================================================================================================
+==>step: 102, f_score: 0.3828236162662506, recall: 0.40443897247314453, precision:0.38195136189460754, sAP10: 5.0
+ 
+epo: 101, steps: 102 ,sAP10 : 5.0000 , best sAP10: 5.6667
+{'fscore': 0.38282362, 'recall': 0.40443897, 'precision': 0.38195136, 'sAP10': 5.0}
+====================================================================================================
+==>step: 103, f_score: 0.38282033801078796, recall: 0.40332451462745667, precision:0.38344845175743103, sAP10: 5.0
+ 
+epo: 102, steps: 103 ,sAP10 : 5.0000 , best sAP10: 5.6667
+{'fscore': 0.38282034, 'recall': 0.4033245, 'precision': 0.38344845, 'sAP10': 5.0}
+====================================================================================================
+==>step: 104, f_score: 0.38255637884140015, recall: 0.4016154706478119, precision:0.38485604524612427, sAP10: 6.249999999999998
+ 
+epo: 103, steps: 104 ,sAP10 : 6.2500 , best sAP10: 6.2500
+{'fscore': 0.38255638, 'recall': 0.40161547, 'precision': 0.38485605, 'sAP10': 6.249999999999998}
+====================================================================================================
+==>step: 105, f_score: 0.38890427350997925, recall: 0.41081565618515015, precision:0.38884884119033813, sAP10: 6.249999999999998
+ 
+epo: 104, steps: 105 ,sAP10 : 6.2500 , best sAP10: 6.2500
+{'fscore': 0.38890427, 'recall': 0.41081566, 'precision': 0.38884884, 'sAP10': 6.249999999999998}
+====================================================================================================
+==>step: 106, f_score: 0.3865322172641754, recall: 0.4040980935096741, precision:0.38996219635009766, sAP10: 6.249999999999998
+ 
+epo: 105, steps: 106 ,sAP10 : 6.2500 , best sAP10: 6.2500
+{'fscore': 0.38653222, 'recall': 0.4040981, 'precision': 0.3899622, 'sAP10': 6.249999999999998}
+====================================================================================================
+==>step: 107, f_score: 0.3755919635295868, recall: 0.3900291621685028, precision:0.382030725479126, sAP10: 6.249999999999998
+ 
+epo: 106, steps: 107 ,sAP10 : 6.2500 , best sAP10: 6.2500
+{'fscore': 0.37559196, 'recall': 0.39002916, 'precision': 0.38203073, 'sAP10': 6.249999999999998}
+====================================================================================================
+==>step: 108, f_score: 0.38050156831741333, recall: 0.39411038160324097, precision:0.3863077461719513, sAP10: 6.249999999999998
+ 
+epo: 107, steps: 108 ,sAP10 : 6.2500 , best sAP10: 6.2500
+{'fscore': 0.38050157, 'recall': 0.39411038, 'precision': 0.38630775, 'sAP10': 6.249999999999998}
+====================================================================================================
+==>step: 109, f_score: 0.3827790319919586, recall: 0.4004880487918854, precision:0.38330477476119995, sAP10: 6.249999999999998
+ 
+epo: 108, steps: 109 ,sAP10 : 6.2500 , best sAP10: 6.2500
+{'fscore': 0.38277903, 'recall': 0.40048805, 'precision': 0.38330477, 'sAP10': 6.249999999999998}
+====================================================================================================
+==>step: 110, f_score: 0.3950923979282379, recall: 0.4200834333896637, precision:0.38902029395103455, sAP10: 4.166666666666667
+ 
+epo: 109, steps: 110 ,sAP10 : 4.1667 , best sAP10: 6.2500
+{'fscore': 0.3950924, 'recall': 0.42008343, 'precision': 0.3890203, 'sAP10': 4.166666666666667}
+====================================================================================================
+==>step: 111, f_score: 0.40473905205726624, recall: 0.43740683794021606, precision:0.3913252055644989, sAP10: 4.916666666666667
+ 
+epo: 110, steps: 111 ,sAP10 : 4.9167 , best sAP10: 6.2500
+{'fscore': 0.40473905, 'recall': 0.43740684, 'precision': 0.3913252, 'sAP10': 4.916666666666667}
+====================================================================================================
+==>step: 112, f_score: 0.407990038394928, recall: 0.4508174955844879, precision:0.3885553777217865, sAP10: 4.3269230769230775
+ 
+epo: 111, steps: 112 ,sAP10 : 4.3269 , best sAP10: 6.2500
+{'fscore': 0.40799004, 'recall': 0.4508175, 'precision': 0.38855538, 'sAP10': 4.3269230769230775}
+====================================================================================================
+==>step: 113, f_score: 0.41634368896484375, recall: 0.46424001455307007, precision:0.39218294620513916, sAP10: 4.21875
+ 
+epo: 112, steps: 113 ,sAP10 : 4.2188 , best sAP10: 6.2500
+{'fscore': 0.4163437, 'recall': 0.46424, 'precision': 0.39218295, 'sAP10': 4.21875}
+====================================================================================================
+==>step: 114, f_score: 0.43007880449295044, recall: 0.48810964822769165, precision:0.39826834201812744, sAP10: 4.1911764705882355
+ 
+epo: 113, steps: 114 ,sAP10 : 4.1912 , best sAP10: 6.2500
+{'fscore': 0.4300788, 'recall': 0.48810965, 'precision': 0.39826834, 'sAP10': 4.1911764705882355}
+====================================================================================================
+==>step: 115, f_score: 0.4263015687465668, recall: 0.48163852095603943, precision:0.3954799175262451, sAP10: 4.166666666666667
+ 
+epo: 114, steps: 115 ,sAP10 : 4.1667 , best sAP10: 6.2500
+{'fscore': 0.42630157, 'recall': 0.48163852, 'precision': 0.39547992, 'sAP10': 4.166666666666667}
+====================================================================================================
+==>step: 116, f_score: 0.4281172752380371, recall: 0.48387545347213745, precision:0.39677199721336365, sAP10: 4.1911764705882355
+ 
+epo: 115, steps: 116 ,sAP10 : 4.1912 , best sAP10: 6.2500
+{'fscore': 0.42811728, 'recall': 0.48387545, 'precision': 0.396772, 'sAP10': 4.1911764705882355}
+====================================================================================================
+==>step: 117, f_score: 0.42698487639427185, recall: 0.48076122999191284, precision:0.397067666053772, sAP10: 6.125
+ 
+epo: 116, steps: 117 ,sAP10 : 6.1250 , best sAP10: 6.2500
+{'fscore': 0.42698488, 'recall': 0.48076123, 'precision': 0.39706767, 'sAP10': 6.125}
+====================================================================================================
+==>step: 118, f_score: 0.40543127059936523, recall: 0.446494996547699, precision:0.3845461905002594, sAP10: 4.5
+ 
+epo: 117, steps: 118 ,sAP10 : 4.5000 , best sAP10: 6.2500
+{'fscore': 0.40543127, 'recall': 0.446495, 'precision': 0.3845462, 'sAP10': 4.5}
+====================================================================================================
+==>step: 119, f_score: 0.3800162672996521, recall: 0.402782678604126, precision:0.3722635805606842, sAP10: 5.624999999999999
+ 
+epo: 118, steps: 119 ,sAP10 : 5.6250 , best sAP10: 6.2500
+{'fscore': 0.38001627, 'recall': 0.40278268, 'precision': 0.37226358, 'sAP10': 5.624999999999999}
+====================================================================================================
+==>step: 120, f_score: 0.36194637417793274, recall: 0.37721771001815796, precision:0.3622373938560486, sAP10: 5.624999999999999
+ 
+epo: 119, steps: 120 ,sAP10 : 5.6250 , best sAP10: 6.2500
+{'fscore': 0.36194637, 'recall': 0.3772177, 'precision': 0.3622374, 'sAP10': 5.624999999999999}
+====================================================================================================
+==>step: 121, f_score: 0.35293206572532654, recall: 0.3658834993839264, precision:0.35600489377975464, sAP10: 5.624999999999999
+ 
+epo: 120, steps: 121 ,sAP10 : 5.6250 , best sAP10: 6.2500
+{'fscore': 0.35293207, 'recall': 0.3658835, 'precision': 0.3560049, 'sAP10': 5.624999999999999}
+====================================================================================================
+==>step: 122, f_score: 0.33974140882492065, recall: 0.3444839119911194, precision:0.3500383496284485, sAP10: 5.624999999999999
+ 
+epo: 121, steps: 122 ,sAP10 : 5.6250 , best sAP10: 6.2500
+{'fscore': 0.3397414, 'recall': 0.3444839, 'precision': 0.35003835, 'sAP10': 5.624999999999999}
+====================================================================================================
+==>step: 123, f_score: 0.3398205637931824, recall: 0.34116917848587036, precision:0.3531450033187866, sAP10: 5.624999999999999
+ 
+epo: 122, steps: 123 ,sAP10 : 5.6250 , best sAP10: 6.2500
+{'fscore': 0.33982056, 'recall': 0.34116918, 'precision': 0.353145, 'sAP10': 5.624999999999999}
+====================================================================================================
+==>step: 124, f_score: 0.34530651569366455, recall: 0.34524786472320557, precision:0.36117950081825256, sAP10: 5.624999999999999
+ 
+epo: 123, steps: 124 ,sAP10 : 5.6250 , best sAP10: 6.2500
+{'fscore': 0.34530652, 'recall': 0.34524786, 'precision': 0.3611795, 'sAP10': 5.624999999999999}
+====================================================================================================
+==>step: 125, f_score: 0.3490648567676544, recall: 0.3507240414619446, precision:0.3632912337779999, sAP10: 5.624999999999999
+ 
+epo: 124, steps: 125 ,sAP10 : 5.6250 , best sAP10: 6.2500
+{'fscore': 0.34906486, 'recall': 0.35072404, 'precision': 0.36329123, 'sAP10': 5.624999999999999}
+====================================================================================================
+==>step: 126, f_score: 0.3480384647846222, recall: 0.3509353995323181, precision:0.36144548654556274, sAP10: 5.624999999999999
+ 
+epo: 125, steps: 126 ,sAP10 : 5.6250 , best sAP10: 6.2500
+{'fscore': 0.34803846, 'recall': 0.3509354, 'precision': 0.3614455, 'sAP10': 5.624999999999999}
+====================================================================================================
+==>step: 127, f_score: 0.3438222408294678, recall: 0.3463350236415863, precision:0.35820716619491577, sAP10: 4.833333333333332
+ 
+epo: 126, steps: 127 ,sAP10 : 4.8333 , best sAP10: 6.2500
+{'fscore': 0.34382224, 'recall': 0.34633502, 'precision': 0.35820717, 'sAP10': 4.833333333333332}
+====================================================================================================
+==>step: 128, f_score: 0.34225958585739136, recall: 0.3496228754520416, precision:0.3506894111633301, sAP10: 4.833333333333332
+ 
+epo: 127, steps: 128 ,sAP10 : 4.8333 , best sAP10: 6.2500
+{'fscore': 0.3422596, 'recall': 0.34962288, 'precision': 0.3506894, 'sAP10': 4.833333333333332}
+====================================================================================================
+==>step: 129, f_score: 0.34230607748031616, recall: 0.3530349135398865, precision:0.3472270369529724, sAP10: 4.583333333333333
+ 
+epo: 128, steps: 129 ,sAP10 : 4.5833 , best sAP10: 6.2500
+{'fscore': 0.34230608, 'recall': 0.3530349, 'precision': 0.34722704, 'sAP10': 4.583333333333333}
+====================================================================================================
+==>step: 130, f_score: 0.3402869403362274, recall: 0.3572443425655365, precision:0.3402985632419586, sAP10: 4.583333333333333
+ 
+epo: 129, steps: 130 ,sAP10 : 4.5833 , best sAP10: 6.2500
+{'fscore': 0.34028694, 'recall': 0.35724434, 'precision': 0.34029856, 'sAP10': 4.583333333333333}
+====================================================================================================
+==>step: 131, f_score: 0.3413344621658325, recall: 0.36135759949684143, precision:0.33806246519088745, sAP10: 4.404761904761904
+ 
+epo: 130, steps: 131 ,sAP10 : 4.4048 , best sAP10: 6.2500
+{'fscore': 0.34133446, 'recall': 0.3613576, 'precision': 0.33806247, 'sAP10': 4.404761904761904}
+====================================================================================================
+==>step: 132, f_score: 0.3589654266834259, recall: 0.38904884457588196, precision:0.3468474745750427, sAP10: 4.404761904761904
+ 
+epo: 131, steps: 132 ,sAP10 : 4.4048 , best sAP10: 6.2500
+{'fscore': 0.35896543, 'recall': 0.38904884, 'precision': 0.34684747, 'sAP10': 4.404761904761904}
+====================================================================================================
+==>step: 133, f_score: 0.37479090690612793, recall: 0.4057888090610504, precision:0.3627321124076843, sAP10: 5.238095238095238
+ 
+epo: 132, steps: 133 ,sAP10 : 5.2381 , best sAP10: 6.2500
+{'fscore': 0.3747909, 'recall': 0.4057888, 'precision': 0.3627321, 'sAP10': 5.238095238095238}
+====================================================================================================
+==>step: 134, f_score: 0.3782263994216919, recall: 0.4107706546783447, precision:0.36547333002090454, sAP10: 5.9375
+ 
+epo: 133, steps: 134 ,sAP10 : 5.9375 , best sAP10: 6.2500
+{'fscore': 0.3782264, 'recall': 0.41077065, 'precision': 0.36547333, 'sAP10': 5.9375}
+====================================================================================================
+==>step: 135, f_score: 0.37787696719169617, recall: 0.4091700613498688, precision:0.36608219146728516, sAP10: 5.9375
+ 
+epo: 134, steps: 135 ,sAP10 : 5.9375 , best sAP10: 6.2500
+{'fscore': 0.37787697, 'recall': 0.40917006, 'precision': 0.3660822, 'sAP10': 5.9375}
+====================================================================================================
+==>step: 136, f_score: 0.3802875876426697, recall: 0.40971261262893677, precision:0.3702262043952942, sAP10: 5.9375
+ 
+epo: 135, steps: 136 ,sAP10 : 5.9375 , best sAP10: 6.2500
+{'fscore': 0.3802876, 'recall': 0.4097126, 'precision': 0.3702262, 'sAP10': 5.9375}
+====================================================================================================
+==>step: 137, f_score: 0.38218599557876587, recall: 0.410648912191391, precision:0.37288108468055725, sAP10: 7.000000000000001
+ 
+epo: 136, steps: 137 ,sAP10 : 7.0000 , best sAP10: 7.0000
+{'fscore': 0.382186, 'recall': 0.4106489, 'precision': 0.37288108, 'sAP10': 7.000000000000001}
+====================================================================================================
+==>step: 138, f_score: 0.38323289155960083, recall: 0.41098690032958984, precision:0.3747990131378174, sAP10: 7.000000000000001
+ 
+epo: 137, steps: 138 ,sAP10 : 7.0000 , best sAP10: 7.0000
+{'fscore': 0.3832329, 'recall': 0.4109869, 'precision': 0.374799, 'sAP10': 7.000000000000001}
+====================================================================================================
+==>step: 139, f_score: 0.3841458857059479, recall: 0.4081611633300781, precision:0.3787846267223358, sAP10: 5.9375
+ 
+epo: 138, steps: 139 ,sAP10 : 5.9375 , best sAP10: 7.0000
+{'fscore': 0.3841459, 'recall': 0.40816116, 'precision': 0.37878463, 'sAP10': 5.9375}
+====================================================================================================
+==>step: 140, f_score: 0.37414151430130005, recall: 0.39877352118492126, precision:0.36895620822906494, sAP10: 5.833333333333333
+ 
+epo: 139, steps: 140 ,sAP10 : 5.8333 , best sAP10: 7.0000
+{'fscore': 0.3741415, 'recall': 0.39877352, 'precision': 0.3689562, 'sAP10': 5.833333333333333}
+====================================================================================================
+==>step: 141, f_score: 0.37455394864082336, recall: 0.3978993892669678, precision:0.37030842900276184, sAP10: 5.833333333333333
+ 
+epo: 140, steps: 141 ,sAP10 : 5.8333 , best sAP10: 7.0000
+{'fscore': 0.37455395, 'recall': 0.3978994, 'precision': 0.37030843, 'sAP10': 5.833333333333333}
+====================================================================================================
+==>step: 142, f_score: 0.3656580448150635, recall: 0.3934530019760132, precision:0.3562247157096863, sAP10: 5.833333333333333
+ 
+epo: 141, steps: 142 ,sAP10 : 5.8333 , best sAP10: 7.0000
+{'fscore': 0.36565804, 'recall': 0.393453, 'precision': 0.35622472, 'sAP10': 5.833333333333333}
+====================================================================================================
+==>step: 143, f_score: 0.35882773995399475, recall: 0.38497692346572876, precision:0.3511640429496765, sAP10: 5.0
+ 
+epo: 142, steps: 143 ,sAP10 : 5.0000 , best sAP10: 7.0000
+{'fscore': 0.35882774, 'recall': 0.38497692, 'precision': 0.35116404, 'sAP10': 5.0}
+====================================================================================================
+==>step: 144, f_score: 0.3447395861148834, recall: 0.3698474168777466, precision:0.33795255422592163, sAP10: 5.104166666666667
+ 
+epo: 143, steps: 144 ,sAP10 : 5.1042 , best sAP10: 7.0000
+{'fscore': 0.3447396, 'recall': 0.36984742, 'precision': 0.33795255, 'sAP10': 5.104166666666667}
+====================================================================================================
+==>step: 145, f_score: 0.33329448103904724, recall: 0.3530527949333191, precision:0.329889714717865, sAP10: 5.104166666666667
+ 
+epo: 144, steps: 145 ,sAP10 : 5.1042 , best sAP10: 7.0000
+{'fscore': 0.33329448, 'recall': 0.3530528, 'precision': 0.3298897, 'sAP10': 5.104166666666667}
+====================================================================================================
+==>step: 146, f_score: 0.33299630880355835, recall: 0.3531930148601532, precision:0.3288879990577698, sAP10: 4.270833333333333
+ 
+epo: 145, steps: 146 ,sAP10 : 4.2708 , best sAP10: 7.0000
+{'fscore': 0.3329963, 'recall': 0.353193, 'precision': 0.328888, 'sAP10': 4.270833333333333}
+====================================================================================================
+==>step: 147, f_score: 0.33213168382644653, recall: 0.3525022268295288, precision:0.3277565538883209, sAP10: 4.270833333333333
+ 
+epo: 146, steps: 147 ,sAP10 : 4.2708 , best sAP10: 7.0000
+{'fscore': 0.33213168, 'recall': 0.35250223, 'precision': 0.32775655, 'sAP10': 4.270833333333333}
+====================================================================================================
+==>step: 148, f_score: 0.34071287512779236, recall: 0.37103575468063354, precision:0.32906287908554077, sAP10: 4.270833333333333
+ 
+epo: 147, steps: 148 ,sAP10 : 4.2708 , best sAP10: 7.0000
+{'fscore': 0.34071288, 'recall': 0.37103575, 'precision': 0.32906288, 'sAP10': 4.270833333333333}
+====================================================================================================
+==>step: 149, f_score: 0.3539738655090332, recall: 0.38823235034942627, precision:0.33959826827049255, sAP10: 5.104166666666667
+ 
+epo: 148, steps: 149 ,sAP10 : 5.1042 , best sAP10: 7.0000
+{'fscore': 0.35397387, 'recall': 0.38823235, 'precision': 0.33959827, 'sAP10': 5.104166666666667}
+====================================================================================================
+==>step: 150, f_score: 0.3684450089931488, recall: 0.40246185660362244, precision:0.3543359041213989, sAP10: 5.104166666666667
+ 
+epo: 149, steps: 150 ,sAP10 : 5.1042 , best sAP10: 7.0000
+{'fscore': 0.368445, 'recall': 0.40246186, 'precision': 0.3543359, 'sAP10': 5.104166666666667}
+====================================================================================================
+==>step: 151, f_score: 0.36147168278694153, recall: 0.39612236618995667, precision:0.3468400537967682, sAP10: 5.104166666666667
+ 
+epo: 150, steps: 151 ,sAP10 : 5.1042 , best sAP10: 7.0000
+{'fscore': 0.36147168, 'recall': 0.39612237, 'precision': 0.34684005, 'sAP10': 5.104166666666667}
+====================================================================================================
+==>step: 152, f_score: 0.3601338565349579, recall: 0.39408981800079346, precision:0.3461712896823883, sAP10: 5.104166666666667
+ 
+epo: 151, steps: 152 ,sAP10 : 5.1042 , best sAP10: 7.0000
+{'fscore': 0.36013386, 'recall': 0.39408982, 'precision': 0.3461713, 'sAP10': 5.104166666666667}
+====================================================================================================
+==>step: 153, f_score: 0.35577934980392456, recall: 0.38920122385025024, precision:0.3423519432544708, sAP10: 5.104166666666667
+ 
+epo: 152, steps: 153 ,sAP10 : 5.1042 , best sAP10: 7.0000
+{'fscore': 0.35577935, 'recall': 0.38920122, 'precision': 0.34235194, 'sAP10': 5.104166666666667}
+====================================================================================================
+==>step: 154, f_score: 0.3515329360961914, recall: 0.3834334909915924, precision:0.33909082412719727, sAP10: 5.104166666666667
+ 
+epo: 153, steps: 154 ,sAP10 : 5.1042 , best sAP10: 7.0000
+{'fscore': 0.35153294, 'recall': 0.3834335, 'precision': 0.33909082, 'sAP10': 5.104166666666667}
+====================================================================================================
+==>step: 155, f_score: 0.3461526930332184, recall: 0.375935435295105, precision:0.33467260003089905, sAP10: 5.104166666666667
+ 
+epo: 154, steps: 155 ,sAP10 : 5.1042 , best sAP10: 7.0000
+{'fscore': 0.3461527, 'recall': 0.37593544, 'precision': 0.3346726, 'sAP10': 5.104166666666667}
+====================================================================================================

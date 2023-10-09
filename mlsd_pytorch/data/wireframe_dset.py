@@ -44,7 +44,7 @@ def parse_label_file_info(img_dir, label_file):
         h = c['height']
         lines = c['lines']
         # import pdb; pdb.set_trace()
-        # fn = c['filename'][:-4]+'.jpg'
+        #fn = c['filename'][:-4]+'.JPG'
         fn = c['filename'][:-4] + '.png'
         full_fn = img_dir + fn
         assert os.path.exists(full_fn), full_fn
