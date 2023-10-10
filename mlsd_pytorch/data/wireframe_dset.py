@@ -44,8 +44,12 @@ def parse_label_file_info(img_dir, label_file):
         h = c['height']
         lines = c['lines']
         # import pdb; pdb.set_trace()
-        #fn = c['filename'][:-4]+'.JPG'
-        fn = c['filename'][:-4] + '.png'
+        try:
+            #fn = c['filename'][:-4]+'.JPG'
+            fn = c['filename'][:-4] + '.png'
+        except KeyError:
+            fn = c['filename'][:-4] + '.png'
+            #fn = c['filename'][:-4] + '.JPG'
         full_fn = img_dir + fn
         assert os.path.exists(full_fn), full_fn
 
@@ -444,10 +448,13 @@ if __name__ == '__main__':
     cfg = get_cfg_defaults()
 
     root_dir = "/home/lhw/m2_disk/data/czcv_2021/wireframe_raw/"
+    #root_dir = "/home/xdeng/PycharmProjects/mlsd_pytorch_xd/data/wireframe_raw"
     cfg.train.img_dir = root_dir+ "/images/"
-    cfg.train.label_fn = root_dir+ "/valid_1.json"
+    #cfg.train.label_fn = root_dir+ "/valid_1.json"
+    cfg.train.label_fn = root_dir + "/valid.json"
     cfg.train.batch_size = 1
     cfg.train.data_cache_dir = "/home/lhw/m2_disk/data/czcv_2021/wireframe_cache/"
+    #cfg.train.data_cache_dir = "/home/xdeng/PycharmProjects/mlsd_pytorch_xd/data/wireframe_cache/"
     cfg.train.with_cache = True
     cfg.datasets.with_centermap_extend = False
 

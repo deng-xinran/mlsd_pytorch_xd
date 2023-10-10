@@ -5,12 +5,12 @@ Pytorch implementation with training code. <br/>
 
 ## result
 
-model| img_size| sAP10
-|---|---|:---:| 
-mlsd_tiny (this repo)| 512|  56.4
-mlsd_tiny (in the paper)| 512|  58.0
-mlsd_large (this repo)| 512|  59.6
-mlsd_large (in the paper)| 512|  62.1
+| model                     | img_size | sAP10 |
+|---------------------------|----------|:-----:| 
+| mlsd_tiny (this repo)     | 512      | 56.4  |
+| mlsd_tiny (in the paper)  | 512      | 58.0  |
+| mlsd_large (this repo)    | 512      | 59.6  |
+| mlsd_large (in the paper) | 512      | 62.1  |
 
 (this repo use:  min_score=0.05,  min_len=5, tok_k_lines= 500)
 

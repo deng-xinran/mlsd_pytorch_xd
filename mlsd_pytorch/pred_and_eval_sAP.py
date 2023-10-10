@@ -20,7 +20,7 @@ def get_args():
     args.add_argument("--model_path", type=str,
                       default= current_dir +"/../workdir/pretrained_models/mobilev2_mlsd_tiny_512_bsize24/best.pth")
     args.add_argument("--gt_json", type=str,
-                      default= current_dir +"/../data/wireframe_raw/valid_1.json")
+                      default= current_dir +"/../data/wireframe_raw/valid.json")
     args.add_argument("--img_dir", type=str,
                       default= current_dir + "/../data/wireframe_raw/images/")
     args.add_argument("--sap_thresh", type=float, help="sAP thresh", default=10.0)
