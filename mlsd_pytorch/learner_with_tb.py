@@ -167,7 +167,7 @@ class Simple_MLSD_Learner():
         return {
             'fscore': f_score,
             'recall': recall,
-            'precision':precision,
+            'precision': precision,
             'sAP10': sAP
         }
 
