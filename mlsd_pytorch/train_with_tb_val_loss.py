@@ -12,7 +12,7 @@ from mlsd_pytorch.cfg.default import get_cfg_defaults
 from mlsd_pytorch.optim.lr_scheduler import WarmupMultiStepLR
 
 from mlsd_pytorch.data import get_train_dataloader, get_val_dataloader
-from mlsd_pytorch.learner_with_tb import Simple_MLSD_Learner
+from mlsd_pytorch.learner_with_tb_val_loss import Simple_MLSD_Learner
 from mlsd_pytorch.models.build_model import build_model
 from torch.utils.tensorboard import SummaryWriter #add tensorboard
 

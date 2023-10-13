@@ -110,7 +110,7 @@ class Simple_MLSD_Learner():
             label = label[:, 7:, :, :]
             batch_outputs = batch_outputs[:, 7:, :, :]
 
-            lloss_dict = self.loss_fn(outputs, label,
+            loss_dict = self.loss_fn(outputs, label,
                                    batch_data["gt_lines_tensor_512_list"],
                                    batch_data["sol_lines_512_all_tensor_list"])
             loss = loss_dict['loss']
@@ -249,7 +249,7 @@ class Simple_MLSD_Learner():
                 else:
                     early_n += 1
                 self.logger.write("epo: {}, steps: {} ,sAP10 : {:.4f} , best sAP10: {:.4f}, val_loss: {:.4f}". \
-                                      format(self.epo, self.global_step, fscore, best_score),val_loss['val_loss'])
+                                      format(self.epo, self.global_step, fscore, best_score), val_loss['val_loss'])
                 self.logger.write(str(m))
                 self.logger.write("=="*50)
                 self.logger.write(str(val_loss))
