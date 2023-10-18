@@ -115,7 +115,7 @@ class Simple_MLSD_Learner():
                 gt_lines_512 = np.array(gt_lines_512, np.float32)
 
                 outputs = outputs.unsqueeze(0)
-                pred_lines,scores = deccode_lines(outputs, thresh, min_len, topk, 3) #
+                #pred_lines,scores = deccode_lines(outputs, thresh, min_len, topk, 3)
 
                 center_ptss, pred_lines, _, scores = \
                     deccode_lines_TP(outputs, thresh, min_len, topk, 3)
