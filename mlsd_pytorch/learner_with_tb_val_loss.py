@@ -33,7 +33,6 @@ class Simple_MLSD_Learner():
                  max_grad_norm = 100.0,
                  batch_to_model_inputs_fn = None,
                  early_stop_n = 4,
-
                  writer = None
                  ):
         self.cfg = cfg
@@ -199,7 +198,7 @@ class Simple_MLSD_Learner():
             train_avg_replacement_loss = AverageMeter()
             train_avg_line_seg_loss = AverageMeter()
             train_avg_junc_seg_loss = AverageMeter()
-            
+
             train_avg_match_loss = AverageMeter()
             train_avg_match_rario = AverageMeter()
             train_avg_t_loss = AverageMeter()
@@ -239,6 +238,7 @@ class Simple_MLSD_Learner():
             ##self.scheduler.step() ## we update every step instead
             if self.epo > self.cfg.val.val_after_epoch:
                 ## val
+                val_loss = learner.val(self.model, val_dataloader)
                 m = self.val(self.model, val_dataloader)
                 fscore = m['sAP10']
                 if best_score < fscore:
@@ -249,7 +249,7 @@ class Simple_MLSD_Learner():
                 else:
                     early_n += 1
                 self.logger.write("epo: {}, steps: {} ,sAP10 : {:.4f} , best sAP10: {:.4f}, val_loss: {:.4f}". \
-                                      format(self.epo, self.global_step, fscore, best_score), val_loss['val_loss'])
+                                      format(self.epo, self.global_step, fscore, best_score),val_loss['val_loss'])
                 self.logger.write(str(m))
                 self.logger.write("=="*50)
                 self.logger.write(str(val_loss))
