@@ -71,6 +71,15 @@ def train(cfg):
 
         lr_scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_lambda_fn)
 
+
+    """if self.epo > self.cfg.val.val_after_epoch:
+        #Validation
+        val_loss = learner.val(self.model, val_loader) #calculate validation loss
+
+        #log the validation loss
+        self.writer.add.scalar('val/loss')
+    """
+
     create_dir(cfg.train.save_dir)
     logger = TxtLogger(cfg.train.save_dir + "/train_logger.txt")
     writer = SummaryWriter(cfg.train.save_dir + "/logs")
@@ -88,11 +97,11 @@ def train(cfg):
         max_grad_norm=1000.0,
         batch_to_model_inputs_fn=None,
         early_stop_n=cfg.train.early_stop_n,
-        writer=writer
+        writer=writer #add the writer for logging
     )
 
-    #learner.val(model, val_loader)
-    #learner.val(model, train_loader)
+    learner.val(model, val_loader)
+    learner.val(model, train_loader)
     #loss, loss_dict = learner.step()
     learner.train(train_loader, val_loader, epoches=cfg.train.num_train_epochs)
 
