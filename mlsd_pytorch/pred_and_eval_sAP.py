@@ -67,6 +67,7 @@ def infer_one(img_fn, model, input_size=512, score_thresh=0.01, min_len=0, topk=
         pred_lines_list.append([x0, y0, x1, y1])
         scores_list.append(score)
 
+    """
     return {
         'full_fn': img_fn,
         'filename': os.path.basename(img_fn),
@@ -75,7 +76,19 @@ def infer_one(img_fn, model, input_size=512, score_thresh=0.01, min_len=0, topk=
         'lines': pred_lines_list,
         'scores': scores_list
     }
+    """
+    result = {
+        'full_fn': img_fn,
+        'filename': os.path.basename(img_fn),
+        'width': w,
+        'height': h,
+        'lines': pred_lines_list,
+        'scores': scores_list
+    }
+    print("Result:")
+    print(result)
 
+    return result
 
 def calculate_sAP(gt_infos, pred_infos, sap_thresh):
     assert len(gt_infos) == len(pred_infos)
@@ -133,7 +146,8 @@ def main(args):
 
     for c in tqdm.tqdm(contens):
         gt_infos.append(c)
-        fn = c['filename'][:-4] + '.png'
+        #fn = c['filename'][:-4] + '.png'
+        fn = c['filename'][:-4] + '.JPG'
         full_fn = img_dir + '/' + fn
         pred_infos.append(infer_one(full_fn, model,
                                     args.input_size,
