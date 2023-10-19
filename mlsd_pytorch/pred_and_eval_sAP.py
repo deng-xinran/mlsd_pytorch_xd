@@ -18,11 +18,11 @@ def get_args():
     current_dir = default=os.path.dirname(__file__)
     args.add_argument("--config", type=str,default = current_dir  + '/configs/mobilev2_mlsd_tiny_512_base2_bsize24.yaml')
     args.add_argument("--model_path", type=str,
-                      default= current_dir +"/../workdir/pretrained_models/mobilev2_mlsd_tiny_512_bsize24/best.pth")
+                      default= current_dir +"/../workdir/models/mobilev2_mlsd_tiny_512_bsize24/best.pth")
     args.add_argument("--gt_json", type=str,
-                      default= current_dir +"/../data/wireframe_raw/valid.json")
+                      default= current_dir +"/../data/wireframe_raw/images/test_images/test_valid.json")
     args.add_argument("--img_dir", type=str,
-                      default= current_dir + "/../data/wireframe_raw/images/")
+                      default= current_dir + "/../data/wireframe_raw/images/test_images")
     args.add_argument("--sap_thresh", type=float, help="sAP thresh", default=10.0)
     args.add_argument("--top_k", type=float, help="top k lines", default= 500)
     args.add_argument("--min_len", type=float, help="min len of line", default=5.0)
