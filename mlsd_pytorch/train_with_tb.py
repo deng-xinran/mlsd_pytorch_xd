@@ -107,7 +107,7 @@ if __name__ == '__main__':
 
     if args.config.endswith('\r'):
         args.config = args.config[:-1]
-    print('using config: ',args.config.strip())
+    print('using config: ', args.config.strip())
     cfg.merge_from_file(args.config)
 
     cfg.train.save_dir = cfg.train.save_dir.rstrip('/') + datetime.datetime.now().isoformat() + '/'
